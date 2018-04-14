@@ -1,14 +1,151 @@
 <template>
-  <div class="index-wrap">
-    <div class="index-left">index-left</div>
-    <div class="index-right">index-right</div>
+<div class="index-wrap">
+    <div class="index-left">
+      <div class="index-left-block">
+        <h2>全部产品</h2>
+
+        <template v-for = "product in productList">
+          <h3>{{product.title}}</h3>
+          <ul>
+            <li v-for="item in product.list">
+              <a :href="item.url">{{item.name}}</a>
+            </li>
+          </ul>
+          <div v-if="!product.last" class="hr"></div>
+        </template>
+      </div>
+      <div class="index-left-block lastest-news">
+        <h2>最新消息</h2>
+        <ul>
+          <li v-for="item in newsList">
+            <a :href="item.url">{{item.title}}</a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+    <div class="index-right">
+      <slide-show :slides="slides" :inv="invTime"></slide-show>
+      <div class="index-board-list">
+        <div
+        class="index-board-item"
+        v-for="(item, index) in boardList"
+        :class="[{'line-last' : index % 2 !== 0}, 'index-board-' + item.id]">
+          <div class="index-board-item-inner" >
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.description }}</p>
+            <div class="index-board-button">
+              <router-link class="button" :to="{path: 'detail/' + item.toKey}">立即购买</router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      productList : {
+        pc : {
+          title : "PC产品",
+          list : [
+            {
+              name: '数据统计',
+              url: 'http://starcraft.com'
+            },
+            {
+              name: '数据预测',
+              url: 'http://warcraft.com'
+            },
+            {
+              name: '流量分析',
+              url: 'http://overwatch.com',
+              hot: true
+            },
+            {
+              name: '广告发布',
+              url: 'http://hearstone.com'
+            }
+          ]
+        },
+
+        app : {
+          title : "手机应用类",
+          last : true,
+          list : [
+            {
+              name: '91助手',
+              url: 'http://weixin.com'
+            },
+            {
+              name: '产品助手',
+              url: 'http://twitter.com',
+              hot: true
+            },
+            {
+              name: '智能地图',
+              url: 'http://maps.com'
+            },
+            {
+              name: '团队语音',
+              url: 'http://phone.com'
+            }
+          ]
+        }
+      },
+      newsList :  [
+            {
+              title: '数据统计',
+              url: 'http://starcraft.com'
+            },
+            {
+              title: '数据预测',
+              url: 'http://warcraft.com'
+            },
+            {
+              title: '流量分析',
+              url: 'http://overwatch.com',
+              hot: true
+            },
+            {
+              title: '广告发布',
+              url: 'http://hearstone.com'
+            }
+          ],
+          boardList: [
+        {
+          title: '开放产品',
+          description: '开放产品是一款开放产品',
+          id: 'car',
+          toKey: 'analysis',
+          saleout: false
+        },
+        {
+          title: '品牌营销',
+          description: '品牌营销帮助你的产品更好地找到定位',
+          id: 'earth',
+          toKey: 'count',
+          saleout: false
+        },
+        {
+          title: '使命必达',
+          description: '使命必达快速迭代永远保持最前端的速度',
+          id: 'loud',
+          toKey: 'forecast',
+          saleout: true
+        },
+        {
+          title: '勇攀高峰',
+          description: '帮你勇闯高峰，到达事业的顶峰',
+          id: 'hill',
+          toKey: 'publish',
+          saleout: false
+        }
+      ]
+    };
   }
 };
 </script>
