@@ -25,7 +25,8 @@
       </div>
     </div>
     <div class="index-right">
-      <slide-show :slides="slides" :inv="invTime"></slide-show>
+      <slide-show :slides="slides" :inv="invTime"
+      @onchange="desomething"></slide-show>
       <div class="index-board-list">
         <div
         class="index-board-item"
@@ -45,109 +46,81 @@
 </template>
 
 <script>
+import axios from "axios";
+import slideShow from "../components/slideShow"
 export default {
+  components : {
+    slideShow
+  },
+  mounted() {
+    //生命周期mounted阶段
+    //获取新闻列表 需要post，将get改成post就可以了
+    axios
+      .get("getNewsList")
+      .then((res) => {
+        // console.log(res.data.list);
+        this.newsList = res.data.list;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //获取 boardList
+    axios.get("getBoardList")
+    .then((res) => {
+      // console.log(res.data.boardList);
+      this.boardList = res.data.boardList;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    //获取 productList
+    axios.get("productList")
+    .then((res) => {
+      // console.log(res.data.list);
+      this.productList = res.data.list;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  },
+  methods : {
+    desomething(num){
+      // console.log(num);
+    }
+  },
   data() {
     return {
-      productList : {
-        pc : {
-          title : "PC产品",
-          list : [
-            {
-              name: '数据统计',
-              url: 'http://starcraft.com'
-            },
-            {
-              name: '数据预测',
-              url: 'http://warcraft.com'
-            },
-            {
-              name: '流量分析',
-              url: 'http://overwatch.com',
-              hot: true
-            },
-            {
-              name: '广告发布',
-              url: 'http://hearstone.com'
-            }
-          ]
-        },
-
-        app : {
-          title : "手机应用类",
-          last : true,
-          list : [
-            {
-              name: '91助手',
-              url: 'http://weixin.com'
-            },
-            {
-              name: '产品助手',
-              url: 'http://twitter.com',
-              hot: true
-            },
-            {
-              name: '智能地图',
-              url: 'http://maps.com'
-            },
-            {
-              name: '团队语音',
-              url: 'http://phone.com'
-            }
-          ]
-        }
-      },
-      newsList :  [
-            {
-              title: '数据统计',
-              url: 'http://starcraft.com'
-            },
-            {
-              title: '数据预测',
-              url: 'http://warcraft.com'
-            },
-            {
-              title: '流量分析',
-              url: 'http://overwatch.com',
-              hot: true
-            },
-            {
-              title: '广告发布',
-              url: 'http://hearstone.com'
-            }
-          ],
-          boardList: [
-        {
-          title: '开放产品',
-          description: '开放产品是一款开放产品',
-          id: 'car',
-          toKey: 'analysis',
-          saleout: false
+      newsList : null,
+      boardList : null,
+      productList : null,
+      invTime: 5000,
+      slides: [
+        { //js中引入地址用require(),webpack才能打包
+          src: require('../assets/slideShow/pic1.jpg'),
+          title: 'xxx1',
+          href: 'detail/analysis'
         },
         {
-          title: '品牌营销',
-          description: '品牌营销帮助你的产品更好地找到定位',
-          id: 'earth',
-          toKey: 'count',
-          saleout: false
+          src: require('../assets/slideShow/pic2.jpg'),
+          title: 'xxx2',
+          href: 'detail/count'
         },
         {
-          title: '使命必达',
-          description: '使命必达快速迭代永远保持最前端的速度',
-          id: 'loud',
-          toKey: 'forecast',
-          saleout: true
+          src: require('../assets/slideShow/pic3.jpg'),
+          title: 'xxx3',
+          href: 'http://xxx.xxx.com'
         },
         {
-          title: '勇攀高峰',
-          description: '帮你勇闯高峰，到达事业的顶峰',
-          id: 'hill',
-          toKey: 'publish',
-          saleout: false
+          src: require('../assets/slideShow/pic4.jpg'),
+          title: 'xxx4',
+          href: 'detail/forecast'
         }
       ]
     };
   }
 };
+
+
 </script>
 
 <style scoped>
