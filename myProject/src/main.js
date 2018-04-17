@@ -4,6 +4,8 @@ import VueRouter from "vue-router"
 import IndexPage from "./pages/index"
 import mock from "./mockjs/mock"
 import VueResource from "vue-resource"
+import Detail from "./pages/detail.vue"
+
 //Vue.config.productionTip = false
 //使用路由router
 Vue.use(VueRouter);
@@ -14,7 +16,12 @@ let router = new VueRouter({
   routes : [{
     path : "/",
     component : IndexPage
-  }]
+  },
+  {
+    path : "/detail",
+    component : Detail
+  }
+]
 });
 
 new Vue({
