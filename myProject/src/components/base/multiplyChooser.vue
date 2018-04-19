@@ -35,8 +35,12 @@ export default {
         n = this.nowIndex.indexOf(index);
         this.nowIndex.splice(n, 1);
       }
-      console.log(this.nowIndex);
-      this.$emit('on-change', this.nowIndex);
+
+      let mapObj = {};
+      for(let i in this.nowIndex){
+        mapObj[i] = this.selections[i];
+      }
+      this.$emit('on-change', mapObj);
     }
   }
 }
