@@ -9,7 +9,11 @@ Mock.mock(/getNewsList/, {
       url: "@url" //随机生成url
     }
   ]
-})
+});
+
+Mock.mock(/api\/getPrice/, {
+  amount: 1678
+});
 
 Mock.mock(/getBoardList/, {
   boardList : [

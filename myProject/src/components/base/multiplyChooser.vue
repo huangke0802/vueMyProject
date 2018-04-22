@@ -35,8 +35,7 @@ export default {
         n = this.nowIndex.indexOf(index);
         this.nowIndex.splice(n, 1);
       }
-
-      let mapObj = {};
+      let mapObj = new Array();
       for(let i in this.nowIndex){
         mapObj[i] = this.selections[i];
       }
