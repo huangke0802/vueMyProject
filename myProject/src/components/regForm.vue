@@ -69,7 +69,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.dialog-wrap {
+.-wrap {
   position: fixed;
   width: 100%;
   height: 100%;

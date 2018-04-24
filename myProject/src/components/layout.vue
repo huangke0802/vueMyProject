@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import MyDialog from "./dialog";
+import MyDialog from "./base/dialog";
 import LogForm from "./logForm"
 import RegForm from "./regForm"
 

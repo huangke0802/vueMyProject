@@ -5,7 +5,10 @@
         <img :src="productIcon">
         <ul>
           <!-- <li v-for="item in products">{{item.name}}</li> -->
-          <router-link v-for="item in products" :to="{ path: item.path }" tag="li" active-class="active">
+          <router-link
+            v-for="item in products"
+            :key="item.path"
+            :to="{ path: item.path }" tag="li" active-class="active">
             {{ item.name }}
           </router-link>
         </ul>

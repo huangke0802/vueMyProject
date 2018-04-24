@@ -90,13 +90,13 @@
             <th>总价</th>
           </tr>
           <tr>
-            <!-- <td>{{ buyNum }}</td> -->
-            <!-- <td>{{ buyType.label }}</td> -->
-            <!-- <td>{{ period.label }}</td> -->
+            <td>{{ buyNum }}</td>
+            <td>{{ buyType.label }}</td>
+            <td>{{ period.label }}</td>
             <td>
-              <!-- <span v-for="item in versions">{{ item.label }}</span> -->
+              <span v-for="item in versions" :key="item.value">{{ item.label }}</span>
             </td>
-            <!-- <td>{{ price }}</td> -->
+            <td>{{ price }}</td>
           </tr>
         </table>
         <h3 class="buy-dialog-title">请选择银行</h3>
@@ -114,17 +114,19 @@
 
 <script>
 import VSelection from "../../components/base/selection";
-import MyDialog from "../../components/dialog";
+import MyDialog from "../../components/base/dialog";
 import VCounter from "../../components/base/counter";
 import VChooser from "../../components/base/chooser"
 import VMulChooser from "../../components/base/multiplyChooser"
+import BankChooser from "../../components/bankChooser"
 export default {
   components: {
     VSelection,
     MyDialog,
     VCounter,
     VChooser,
-    VMulChooser
+    VMulChooser,
+    BankChooser
   },
   data() {
     return {
@@ -181,8 +183,12 @@ export default {
   },
   methods: {
     hideErrDialog() {},
-    hidePayDialog() {},
-    showPayDialog() {},
+    hidePayDialog() {
+      this.isShowPayDialog = false;
+    },
+    showPayDialog() {
+      this.isShowPayDialog = true;
+    },
     onChangeBanks() {},
     confirmBuy() {},
     onParamChange(type, value) {
@@ -207,6 +213,13 @@ export default {
         this.price = res.body.amount;
       });
     }
+  },
+  mounted(){
+    this.buyNum = 1;
+    this.buyType = this.buyTypes[0];
+    this.versions = [this.versionList[0]];
+    this.period = this.periodList[0];
+    this.getPrice();
   }
 };
 </script>
