@@ -62,6 +62,9 @@ export default {
   methods: {
     closeMyself () {
       this.$emit('on-close')
+    },
+    onLogin(){
+
     }
   }
 }

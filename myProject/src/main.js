@@ -9,6 +9,7 @@ import Count from "./pages/detail/count.vue";
 import Forecast from "./pages/detail/forecast.vue";
 import Analysis from "./pages/detail/analysis.vue";
 import Publish from "./pages/detail/publish.vue";
+import OrderListPage from "./pages/orderList.vue";
 
 //Vue.config.productionTip = false
 //使用路由router
@@ -23,9 +24,13 @@ let router = new VueRouter({
       component: IndexPage
     },
     {
+      path: "/orderList",
+      component: OrderListPage
+    },
+    {
       path: "/detail",
       component: Detail,
-      redirect: '/detail/analysis',
+      redirect: "/detail/analysis",
       children: [
         {
           path: "count",

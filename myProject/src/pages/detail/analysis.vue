@@ -108,7 +108,7 @@
       <my-dialog :is-show="isShowErrDialog" @on-close="hideErrDialog">
         支付失败！
       </my-dialog>
-      <!-- <check-order :is-show-check-dialog="isShowCheckOrder" :order-id="orderId" @on-close-check-dialog="hideCheckOrder"></check-order> -->
+      <check-order :is-show-check-dialog="isShowCheckOrder" :order-id="orderId" @on-close-check-dialog="hideCheckOrder"></check-order>
   </div>
 </template>
 
@@ -119,6 +119,7 @@ import VCounter from "../../components/base/counter";
 import VChooser from "../../components/base/chooser"
 import VMulChooser from "../../components/base/multiplyChooser"
 import BankChooser from "../../components/bankChooser"
+import CheckOrder from "../../components/checkOrder"
 export default {
   components: {
     VSelection,
@@ -126,7 +127,8 @@ export default {
     VCounter,
     VChooser,
     VMulChooser,
-    BankChooser
+    BankChooser,
+    CheckOrder
   },
   data() {
     return {
@@ -137,6 +139,9 @@ export default {
       price: 0,
       isShowErrDialog: false,
       isShowPayDialog: false,
+      isShowCheckOrder : false,
+      bankId :null,
+      orderId :null,
       buyTypes: [
         {
           label: "入门版",
@@ -189,8 +194,35 @@ export default {
     showPayDialog() {
       this.isShowPayDialog = true;
     },
-    onChangeBanks() {},
-    confirmBuy() {},
+    onChangeBanks(bankObj) {
+      this.bankId = bankObj.id;
+    },
+    confirmBuy() {
+      let buyVersionArray = [];
+      for(let item of this.versions){
+        buyVersionArray.push(item.value);
+      }
+      let passParams = {
+        buyNumber : this.buyNum,
+        buyType : this.buyType.value,
+        period : this.period.value,
+        version :buyVersionArray.join(','),
+        bankId : this.bankId
+      };
+      this.$http.post("/api/createOrder", passParams)
+      .then(res => {
+
+        this.orderId = res.body.orderId;
+        this.isShowPayDialog = false;
+        this.isShowCheckOrder = true;
+      }, err => {
+        this.isShowPayDialog = false;
+        this.isShowErrDialog = true;
+      });
+    },
+    hideCheckOrder(){
+      this.isShowCheckOrder = false;
+    },
     onParamChange(type, value) {
       this[type] = value;
       // console.log(this[type]);
