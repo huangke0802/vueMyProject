@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="resetComponent">
     <div class="app-head">
       <div class="app-head-inner">
         <router-link :to="{ path: '/' }">
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { eventBus } from "../eventBus"
 import MyDialog from "./base/dialog";
 import LogForm from "./logForm"
 import RegForm from "./regForm"
@@ -88,6 +89,10 @@ export default {
     },
     quitOut(){
       this.userName = "";
+    },
+    resetComponent(){
+      //全局时间
+      eventBus.$emit("reset-component");
     }
   }
 };
